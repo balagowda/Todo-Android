@@ -9,6 +9,7 @@ import android.os.Bundle;
 import com.example.mytask.Adopter.TodoAdopter;
 import com.example.mytask.Model.ToDoModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -21,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
+
+        taskList = new ArrayList<>();
 
         taskRecyclerView = findViewById(R.id.tasksRecyclerView);
         taskRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -38,6 +41,6 @@ public class MainActivity extends AppCompatActivity {
         taskList.add(task);
         taskList.add(task);
 
-
+        taskAdopter.setTask(taskList);
     }
 }

@@ -12,6 +12,8 @@ import com.example.mytask.MainActivity;
 import com.example.mytask.Model.ToDoModel;
 import com.example.mytask.R;
 
+import java.util.List;
+
 public class TodoAdopter extends RecyclerView.Adapter<TodoAdopter.ViewHolder> {
 
     private List<ToDoModel> todoList;
@@ -39,6 +41,11 @@ public class TodoAdopter extends RecyclerView.Adapter<TodoAdopter.ViewHolder> {
 
     private boolean toBoolean(int n){
         return n!=0;
+    }
+
+    public void setTask(List<ToDoModel> todoList){
+        this.todoList = todoList;
+        notifyDataSetChanged();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{
