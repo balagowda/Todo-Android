@@ -17,6 +17,7 @@ import android.widget.EditText;
 import androidx.core.content.ContextCompat;
 
 import com.example.mytask.Model.ToDoModel;
+import com.example.mytask.Utils.Databasehandler;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import org.w3c.dom.Text;
@@ -26,8 +27,7 @@ public class AddNewTask extends BottomSheetDialogFragment {
 
     private EditText newTaskText;
     private Button newTaskSaveButton;
-    private SQLiteDatabase db;
-
+    private Databasehandler db;
     public static AddNewTask newInstance(){
             return new AddNewTask();
     }
@@ -52,9 +52,6 @@ public class AddNewTask extends BottomSheetDialogFragment {
         newTaskText = getView().findViewById(R.id.newTaskText);
         newTaskSaveButton = getView().findViewById(R.id.newTaskButton);
 
-        db = new DatabaseHandler(getActivity());
-        db.openDatabase();
-
         boolean isUpdate = false;
         final Bundle bundle = getArguments();
         if(bundle!=null){
@@ -66,6 +63,8 @@ public class AddNewTask extends BottomSheetDialogFragment {
             }
         }
 
+        db = new Databasehandler(getActivity());
+        db.openDatabase();
         newTaskText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

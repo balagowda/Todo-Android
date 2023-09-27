@@ -6,10 +6,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.mytask.Adopter.TodoAdopter;
 import com.example.mytask.Model.ToDoModel;
 import com.example.mytask.Utils.Databasehandler;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
     private TodoAdopter taskAdopter;
     private List<ToDoModel> taskList;
     private Databasehandler db;
+    private FloatingActionButton fab;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,28 +38,28 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
 
         taskRecyclerView = findViewById(R.id.tasksRecyclerView);
         taskRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        taskAdopter = new TodoAdopter(this);
+        taskAdopter = new TodoAdopter(db,MainActivity.this);
         taskRecyclerView.setAdapter(taskAdopter);
 
-        ToDoModel task = new ToDoModel();
-        task.setTask("This is a task list");
-        task.setStatus(0);
-        task.setId(1);
+        fab = findViewById(R.id.fab);
 
-        taskList.add(task);
-        taskList.add(task);
-        taskList.add(task);
-        taskList.add(task);
-        taskList.add(task);
+        taskList = db.getAllTasks();
+        Collections.reverse(taskList);
+        taskAdopter.setTasks(taskList);
 
-        taskAdopter.setTask(taskList);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AddNewTask.newInstance().show(getSupportFragmentManager(),AddNewTask.TAG);
+            }
+        });
     }
 
     @Override
     public void handleDialogClose(DialogInterface dialog){
         taskList = db.getAllTasks();
         Collections.reverse(taskList);
-        taskAdopter.setTask(taskList);
+        taskAdopter.setTasks(taskList);
         taskAdopter.notifyDataSetChanged();
     }
 }
