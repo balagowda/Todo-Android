@@ -1,6 +1,7 @@
 package com.example.mytask;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -42,6 +43,9 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
         taskRecyclerView.setAdapter(taskAdopter);
 
         fab = findViewById(R.id.fab);
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new RecyclerItemTouchHelper(taskAdopter));
+        itemTouchHelper.attachToRecyclerView(taskRecyclerView);
 
         taskList = db.getAllTasks();
         Collections.reverse(taskList);
