@@ -15,9 +15,9 @@ import com.example.mytask.Utils.Databasehandler;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity implements DialogCloseListener{
 
@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        getSupportActionBar().hide();
+//        Objects.requireNonNull(getSupportActionBar()).hide();
 
         db = new Databasehandler(this);
         db.openDatabase();
@@ -42,10 +42,10 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
         taskAdopter = new TodoAdopter(db,MainActivity.this);
         taskRecyclerView.setAdapter(taskAdopter);
 
-        fab = findViewById(R.id.fab);
-
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(new RecyclerItemTouchHelper(taskAdopter));
         itemTouchHelper.attachToRecyclerView(taskRecyclerView);
+
+        fab = findViewById(R.id.fab);
 
         taskList = db.getAllTasks();
         Collections.reverse(taskList);
