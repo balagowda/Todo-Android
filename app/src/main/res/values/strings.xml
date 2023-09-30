@@ -3,6 +3,8 @@
 <resources>
     <string name="app_name">MyTask</string>
     <string name="nul">task creator</string>
+    <string name="hint">New Task</string>
+    <string name="save">Save</string>
 </resources>
 
 
